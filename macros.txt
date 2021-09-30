@@ -1,0 +1,7 @@
+Sub volTracker()
+For Each c In Selection
+    If c.Offset(0, -1).Value < c.Value Then
+            c.Interior.ColorIndex = 37
+    End If
+Next c
+End Sub
