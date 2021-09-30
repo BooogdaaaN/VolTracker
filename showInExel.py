@@ -13,9 +13,11 @@ column = 0
 for i in coins:
     worksheet.write(row, 0, i['symbol'])
     worksheet.write(row, 1, float(i['volume']))
-    # worksheet.write(row, 2, i['volDay2'])
-    # worksheet.write(row, 3, i['volDay3'])
-    row+=1    
+    worksheet.write(row, 2, float(i['volDay2']))
+    worksheet.write(row, 3, float(i['volDay3']))
+    worksheet.write(row, 4, float(i['volDay4']))
+    #addAndchange here   <>     and here  <>
+    row+=1 
 workbook.close()
 
 # Readme:
