@@ -41,7 +41,7 @@ with open('db.txt') as json_file:
 for savedCoin in savedCoins:
     for curCoin in curCoinsVol:
         if curCoin['symbol'] == savedCoin['symbol']:
-            savedCoin['volDay10'] = curCoin['volume']
+            savedCoin['volDay11'] = curCoin['volume']
             # chnge     here <>
 with open('db.txt', 'w') as outfile:
     json.dump(savedCoins, outfile)
