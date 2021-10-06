@@ -1,5 +1,7 @@
 import requests
 import json
+import json
+import xlsxwriter
 
 def get_jsonOf_CurCoinsVolume():
     response = requests.get("https://api2.binance.com/api/v3/ticker/24hr")
@@ -36,23 +38,62 @@ def get_jsonOf_CurCoinsVolume():
 
 curCoinsVol = get_jsonOf_CurCoinsVolume()
 
+# !!!!!! TO START TRACKING UNCOMMENT 40 and do 41!!!!!!!!!
+# savedCoin['symbol'] = curCoin['symbol']
+# savedCoin['tracking1'] = curCoin['volume']
+#             here<>              keep change until 10 
+# then comment it 
+
+
+# to continue uncomment 48-63
 with open('db.txt') as json_file:
     savedCoins = json.load(json_file)
 for savedCoin in savedCoins:
     for curCoin in curCoinsVol:
         if curCoin['symbol'] == savedCoin['symbol']:
-            savedCoin['volDay16'] = curCoin['volume']
-            # chnge     here <>
+            savedCoin['tracking1'] = savedCoin['tracking2']
+            savedCoin['tracking2'] = savedCoin['tracking3']
+            savedCoin['tracking3'] = savedCoin['tracking4']
+            savedCoin['tracking4'] = savedCoin['tracking5']
+            savedCoin['tracking5'] = savedCoin['tracking6']
+            savedCoin['tracking6'] = savedCoin['tracking7']
+            savedCoin['tracking7'] = savedCoin['tracking8']
+            savedCoin['tracking8'] = savedCoin['tracking9']
+            savedCoin['tracking9'] = savedCoin['tracking10']
+            savedCoin['tracking10'] = curCoin['volume']
+
 with open('db.txt', 'w') as outfile:
     json.dump(savedCoins, outfile)
 
-# with open('db.txt', 'w') as outfile:
-#     json.dump(curCoinsVol, outfile)
+# part 2 writing into exel
+with open('db.txt') as json_file:
+    coins = json.load(json_file)
+
+workbook = xlsxwriter.Workbook('volumeTracker.xlsx')
+worksheet = workbook.add_worksheet('sheet')
+row = 0
+column = 0
+
+for i in coins:
+    worksheet.write(row, 0, i['symbol'])
+    worksheet.write(row, 1, float(i['tracking1']))
+    worksheet.write(row, 2, float(i['tracking2']))
+    worksheet.write(row, 3, float(i['tracking3']))
+    worksheet.write(row, 4, float(i['tracking4']))
+    worksheet.write(row, 5, float(i['tracking5']))
+    worksheet.write(row, 6, float(i['tracking6']))
+    worksheet.write(row, 7, float(i['tracking7']))
+    worksheet.write(row, 8, float(i['tracking8']))
+    worksheet.write(row, 9, float(i['tracking9']))
+    worksheet.write(row, 10, float(i['tracking10']))
+    #addAndchange here   <>     and here  <>
+    row+=1 
+workbook.close()
 
 
 
 # README:
-#     1) to start tracking You should: comment 39-46;
+#     1) to start tracking You should: comment 39-;
 #     2) to continue tracking You should: uncomment 39-46; comment 48-49; in 46 change 'volDay(+1)'
 
 
