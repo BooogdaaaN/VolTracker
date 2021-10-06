@@ -27,6 +27,7 @@ for i in coins:
     worksheet.write(row, 13, float(i['volDay13']))
     worksheet.write(row, 14, float(i['volDay14']))
     worksheet.write(row, 15, float(i['volDay15']))
+    worksheet.write(row, 16, float(i['volDay16']))
     #addAndchange here   <>     and here  <>
     row+=1 
 workbook.close()
