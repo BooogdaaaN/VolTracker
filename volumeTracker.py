@@ -1,6 +1,5 @@
 import requests
 import json
-import json
 import xlsxwriter
 
 def get_jsonOf_CurCoinsVolume():
@@ -14,7 +13,7 @@ def get_jsonOf_CurCoinsVolume():
     for coin in curAllCoinsUsdt: 
             # del coin['symbol']
             del coin['priceChange']
-            del coin['priceChangePercent']
+            # del coin['priceChangePercent']
             del coin['weightedAvgPrice']
             del coin['prevClosePrice']
             del coin['lastPrice']
@@ -61,6 +60,7 @@ for savedCoin in savedCoins:
             savedCoin['tracking8'] = savedCoin['tracking9']
             savedCoin['tracking9'] = savedCoin['tracking10']
             savedCoin['tracking10'] = curCoin['volume']
+            savedCoin['priceChangePercent'] = curCoin['priceChangePercent']
 
 with open('db.txt', 'w') as outfile:
     json.dump(savedCoins, outfile)
@@ -86,6 +86,7 @@ for i in coins:
     worksheet.write(row, 8, float(i['tracking8']))
     worksheet.write(row, 9, float(i['tracking9']))
     worksheet.write(row, 10, float(i['tracking10']))
+    worksheet.write(row, 12, float(i['priceChangePercent']))
     #addAndchange here   <>     and here  <>
     row+=1 
 workbook.close()
