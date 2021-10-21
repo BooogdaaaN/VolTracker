@@ -8,7 +8,9 @@ def get_jsonOf_CurCoinsVolume():
     curAllCoinsUsdt = []
     for coin in allCoins:
         if coin['symbol'][-4:] == 'USDT' and coin['symbol'][-8:] != 'DOWNUSDT' and coin['symbol'][-6:] != 'UPUSDT' and coin['quoteVolume'] != '0.00000000' and coin['symbol']!= 'TUSDUSDT' and coin['symbol']!= 'USDCUSDT' and coin['symbol']!= 'BUSDUSDT' and coin['symbol']!= 'USDPUSDT' and coin['symbol']!= 'EURUSDT' and coin['symbol']!= 'AUDUSDT':
-            curAllCoinsUsdt.append(coin)   
+            for busdCoin in allCoins:
+                if coin['symbol'][:-4]+'BUSD' == busdCoin['symbol']: 
+                    curAllCoinsUsdt.append(coin)   
     
     for coin in curAllCoinsUsdt: 
             # del coin['symbol']
@@ -35,13 +37,22 @@ def get_jsonOf_CurCoinsVolume():
             coin['volume'] = coin.pop('quoteVolume') 
     return curAllCoinsUsdt               
 
-curCoinsVol = get_jsonOf_CurCoinsVolume()
+curCoins = get_jsonOf_CurCoinsVolume()
 
-# !!!!!! TO START TRACKING UNCOMMENT 40 and do 41!!!!!!!!!
-# savedCoin['symbol'] = curCoin['symbol']
-# savedCoin['tracking1'] = curCoin['volume']
-#             here<>              keep change until 10 
-# then comment it 
+# !!!!!! TO START TRACKING UNCOMMENT 42 - 54, run then uncomment !!!!!!!!!
+# for coin in curCoins:
+#     coin['tracking1'] = coin['volume']
+#     coin['tracking2'] = coin['volume']
+#     coin['tracking3'] = coin['volume']
+#     coin['tracking4'] = coin['volume']
+#     coin['tracking5'] = coin['volume']
+#     coin['tracking6'] = coin['volume']
+#     coin['tracking7'] = coin['volume']
+#     coin['tracking8'] = coin['volume']
+#     coin['tracking9'] = coin['volume']
+#     coin['tracking10'] = coin['volume']
+#     del coin['volume']
+ 
 
 
 # to continue uncomment 48-63
@@ -63,33 +74,33 @@ for savedCoin in savedCoins:
             savedCoin['priceChangePercent'] = curCoin['priceChangePercent']
 
 with open('db.txt', 'w') as outfile:
-    json.dump(savedCoins, outfile)
+    json.dump(curCoins, outfile)
 
 # part 2 writing into exel
-with open('db.txt') as json_file:
-    coins = json.load(json_file)
+# with open('db.txt') as json_file:
+#     coins = json.load(json_file)
 
-workbook = xlsxwriter.Workbook('volumeTracker.xlsx')
-worksheet = workbook.add_worksheet('sheet')
-row = 0
-column = 0
+# workbook = xlsxwriter.Workbook('volumeTracker.xlsx')
+# worksheet = workbook.add_worksheet('sheet')
+# row = 0
+# column = 0
 
-for i in coins:
-    worksheet.write(row, 0, i['symbol'])
-    worksheet.write(row, 1, float(i['tracking1']))
-    worksheet.write(row, 2, float(i['tracking2']))
-    worksheet.write(row, 3, float(i['tracking3']))
-    worksheet.write(row, 4, float(i['tracking4']))
-    worksheet.write(row, 5, float(i['tracking5']))
-    worksheet.write(row, 6, float(i['tracking6']))
-    worksheet.write(row, 7, float(i['tracking7']))
-    worksheet.write(row, 8, float(i['tracking8']))
-    worksheet.write(row, 9, float(i['tracking9']))
-    worksheet.write(row, 10, float(i['tracking10']))
-    worksheet.write(row, 12, float(i['priceChangePercent']))
-    #addAndchange here   <>     and here  <>
-    row+=1 
-workbook.close()
+# for i in coins:
+#     worksheet.write(row, 0, i['symbol'])
+#     worksheet.write(row, 1, float(i['tracking1']))
+#     worksheet.write(row, 2, float(i['tracking2']))
+#     worksheet.write(row, 3, float(i['tracking3']))
+#     worksheet.write(row, 4, float(i['tracking4']))
+#     worksheet.write(row, 5, float(i['tracking5']))
+#     worksheet.write(row, 6, float(i['tracking6']))
+#     worksheet.write(row, 7, float(i['tracking7']))
+#     worksheet.write(row, 8, float(i['tracking8']))
+#     worksheet.write(row, 9, float(i['tracking9']))
+#     worksheet.write(row, 10, float(i['tracking10']))
+#     worksheet.write(row, 12, float(i['priceChangePercent']))
+#     #addAndchange here   <>     and here  <>
+#     row+=1 
+# workbook.close()
 
 
 
