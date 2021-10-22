@@ -38,24 +38,7 @@ def get_jsonOf_CurCoinsVolume():
     return curAllCoinsUsdt               
 
 curCoins = get_jsonOf_CurCoinsVolume()
-
-# !!!!!! TO START TRACKING UNCOMMENT 42 - 54, run then uncomment !!!!!!!!!
-# for coin in curCoins:
-#     coin['tracking1'] = coin['volume']
-#     coin['tracking2'] = coin['volume']
-#     coin['tracking3'] = coin['volume']
-#     coin['tracking4'] = coin['volume']
-#     coin['tracking5'] = coin['volume']
-#     coin['tracking6'] = coin['volume']
-#     coin['tracking7'] = coin['volume']
-#     coin['tracking8'] = coin['volume']
-#     coin['tracking9'] = coin['volume']
-#     coin['tracking10'] = coin['volume']
-#     del coin['volume']
  
-
-
-# to continue uncomment 48-63
 with open('db.txt') as json_file:
     savedCoins = json.load(json_file)
 
@@ -99,14 +82,6 @@ for i in coins:
     worksheet.write(row, 9, float(i['tracking9']))
     worksheet.write(row, 10, float(i['tracking10']))
     worksheet.write(row, 12, float(i['priceChangePercent']))
-
     row+=1 
+    
 workbook.close()
-
-
-
-# README:
-#     1) to start tracking You should: comment 39-;
-#     2) to continue tracking You should: uncomment 39-46; comment 48-49; in 46 change 'volDay(+1)'
-
-
