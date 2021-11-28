@@ -9,7 +9,7 @@ def get_jsonOf_CurCoinsVolume():
     for coin in allCoins:
         if coin['symbol'][-4:] == 'USDT' and coin['symbol'][-8:] != 'DOWNUSDT' and coin['symbol'][-6:] != 'UPUSDT' and coin['quoteVolume'] != '0.00000000' and coin['symbol']!= 'TUSDUSDT' and coin['symbol']!= 'USDCUSDT' and coin['symbol']!= 'BUSDUSDT' and coin['symbol']!= 'USDPUSDT' and coin['symbol']!= 'EURUSDT' and coin['symbol']!= 'AUDUSDT' and coin['symbol']!= 'GBPUSDT' and coin['symbol']!= 'PAXGUSDT' and coin['symbol']!= 'VTHOUSDT':
             for busdCoin in allCoins:
-                if coin['symbol'][:-4]+'BUSD' == busdCoin['symbol']: 
+                if coin['symbol'][:-4]+'BUSD' == busdCoin['symbol'] and busdCoin['priceChange'] != '0.00000000': 
                     curAllCoinsUsdt.append(coin)   
     
     for coin in curAllCoinsUsdt: 
@@ -38,7 +38,7 @@ def get_jsonOf_CurCoinsVolume():
     return curAllCoinsUsdt               
 
 curCoins = get_jsonOf_CurCoinsVolume()
- 
+
 with open('db.txt') as json_file:
     savedCoins = json.load(json_file)
 
