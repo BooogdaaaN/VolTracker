@@ -1,6 +1,5 @@
 import requests
 import json
-import xlsxwriter
 
 def get_jsonOf_CurCoinsVolume():
     response = requests.get("https://api2.binance.com/api/v3/ticker/24hr")
@@ -64,24 +63,43 @@ with open('db.txt', 'w') as outfile:
 with open('db.txt') as json_file:
     coins = json.load(json_file)
 
-workbook = xlsxwriter.Workbook('volumeTracker.xlsx')
-worksheet = workbook.add_worksheet('sheet')
-row = 0
-column = 0
+suitCoins =[]
+for coin in coins:
+    for tracking in coin:
+        if tracking == "tracking4":
+            prevTracking = float(coin[tracking])
+            
+        elif tracking == "tracking5":
+            if float(coin[tracking])<prevTracking:
+                prevTracking = float(coin[tracking])
+            else:
+                break
+        elif tracking == "tracking6":
+            if float(coin[tracking])<prevTracking:
+                prevTracking = float(coin[tracking])
+            else:
+                break
+        elif tracking == "tracking7":
+            if float(coin[tracking])<prevTracking:
+                prevTracking = float(coin[tracking])
+            else:
+                break
+        elif tracking == "tracking8":
+            if float(coin[tracking])<prevTracking:
+                prevTracking = float(coin[tracking])
+            else:
+                break
+        elif tracking == "tracking9":
+            prevTracking = float(coin[tracking])
 
-for i in coins:
-    worksheet.write(row, 0, i['symbol'])
-    worksheet.write(row, 1, float(i['tracking1']))
-    worksheet.write(row, 2, float(i['tracking2']))
-    worksheet.write(row, 3, float(i['tracking3']))
-    worksheet.write(row, 4, float(i['tracking4']))
-    worksheet.write(row, 5, float(i['tracking5']))
-    worksheet.write(row, 6, float(i['tracking6']))
-    worksheet.write(row, 7, float(i['tracking7']))
-    worksheet.write(row, 8, float(i['tracking8']))
-    worksheet.write(row, 9, float(i['tracking9']))
-    worksheet.write(row, 10, float(i['tracking10']))
-    worksheet.write(row, 12, float(i['priceChangePercent']))
-    row+=1 
-    
-workbook.close()
+        elif tracking == "tracking10":
+            if float(coin[tracking])>prevTracking:
+                suitCoins.append(coin)
+            else:
+                break
+
+for coin in suitCoins:
+    coin['priceChangePercent'] = float(coin['priceChangePercent'])
+suitCoins.sort(key=lambda coin: coin['priceChangePercent'])
+for coin in suitCoins:
+    print(coin['symbol'])
